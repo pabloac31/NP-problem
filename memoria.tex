@@ -60,11 +60,13 @@
 
 %%% Árboles
 \usepackage{tikz}
-\usetikzlibrary{graphdrawing.trees}
+\usetikzlibrary{automata,arrows}
 
 %%% Matemáticas
 \usepackage{amsmath}
 
+%%% Código
+\usepackage{listings}
 
 %%% Bibliografía
 \makeatletter
@@ -160,8 +162,6 @@ Queremos construir una entrada $(G=(V,E),R,K)$ para el problema ES a partir de u
 \item Por último, $K = 4q$.
 \end{itemize}
 
-Esta reducción se puede hacer en espacio logarítmico, ya que nos limitamos a leer la entrada y escribir la salida sin volver atrás.
-
 Veamos que si 3-SET tiene solución positiva, entonces ES también la tiene.
 
 Sea $C'$ un cubrimiento por conjuntos de $X$. Como $|X| = 3q$, $C'$ tendrá $3q/3 = q$ subconjuntos. Supongamos que estos son $c_1,\dots, c_q$. Consideramos el subgrafo dado por $(V,E)$, donde $V=\{v,c_1,\dots,c_q,x_1,\dots,x_{3q}\}$ y $E=\{vc_1,\dots,vc_q\}\cup(\bigcup_{x_j \in c_i}\{c_ix_j\})$ con $i=1,\dots,q$. Esta es la estrella de Steiner que resuelve el problema, ya que se trata de un árbol que contiene a los nodos de $R$ y el número de aristas es $q+3q = 4q = k$.
@@ -169,6 +169,23 @@ Sea $C'$ un cubrimiento por conjuntos de $X$. Como $|X| = 3q$, $C'$ tendrá $3q/
 Finalizaremos viendo que si ES tiene una solución positiva, entonces 3-SET también la tiene.
 
 Supongamos que existe un grafo de Steiner $G$ con al menos $4q$ lados. Como $G$ es un árbol no puede tener más de $4q+1$ vértices. $G$ contiene a $v$ y $x_1,\dots,x_{3q}$, luego no puede incluir más de $q$ vértices $c_i$. Ahora observamos que para conectar con todos los nodos $x_i$ debe haber al menos $4q+1$ vértices, luego $G$ contiene exactamente $4q$ aristas y $q$ nodos $c_i$ ($c_1,\dots,c_q$). La solución al problema 3-SET vendrá dada por los subconjuntos $C_1,\dots,C_q$ asociados a los vértices $c_1,\dots,c_q$.
+
+\subsubsection*{Espacio logarítmico}
+
+Veamos que esta reducción se puede hacer en espacio logarítmico. Supongamos que la entrada tiene el siguiente formato: $$x_1 \dots x_{3q} \# c_{11} c_{12} c_{13} \dots c_{n1} c_{n2} c_{n3}$$ La salida estará formada por el listado de vértices seguido por el listado de aristas, el valor de $R$ y el valor de $K$ separados por $\#$.
+
+Para los vértices, basta con escribir $v$, ir copiando en la salida los elementos de la entrada hasta llegar a $\#$ y a partir de ahí añadir $c_i$ por cada tres elementos. Por tanto, será necesario un contador $i=1,\dots,n$ y otro $j=1,2,3$  que se pueden almacenar en espacio logarítmico (en binario).
+
+Para las aristas, volvemos hasta el símbolo $\#$ en la entrada y vamos avanzando escribiendo las aristas $vc_{i},\ c_ic_{ij}, \quad i=1,\dots,n \quad j=1,\dots,3$ (usamos los mismos contadores).
+
+Para $R$, volvemos hacia el comienzo de la entrada y añadimos $v$ seguido de $x_1 \dots x_3q$. Guardamos en otro contador el valor $3q$ (también es espacio logarítmico).
+
+Por último, escribimos $K = 4q$ (multiplicar y dividir en binario se puede hacer en espacio logarítmico).
+
+El funcionamiento del algoritmo queda ilustrado en el código que hemos implementado en Python:
+
+% Código
+\lstinputlisting[language=Python, firstline=3]{reduction.py}
 
 \subsection*{Ejemplo}
 Veamos cómo funciona la reducción en un caso concreto.
@@ -181,5 +198,9 @@ La entrada de la reducción serían los conjuntos $X, C$ y la salida, el grafo m
 
 Una solución a este problema es el subárbol formado por los nodos coloreados en verde y las aristas que los unen.
 
+% Imagen ejecución
+Ejecutamos nuestro programa pasándole como entrada este mismo ejemplo y obtenemos:
+
+\includegraphics[width=13cm]{imagen}
 
 \end{document}
