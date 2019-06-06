@@ -1,38 +1,50 @@
 import sys
 
-entrada = input()
+entrada = input() # aquí es donde está la entrada
+salida = ""       # aquí es donde está la salida
 
-elementos = entrada[:entrada.find("#")]
-subconjuntos = entrada[entrada.find("#")+1:]
-X = elementos.split()
-Y = subconjuntos.split()
-C = []
-for i in range(0,int(len(Y)/3)):
-    C.append(Y[3*i:3*i+3])
+# Reducción:
+# Contadores:
+p = 0  # puntero de lectura
+a = 0  # posicion de '#'
+i = 1  # subconjunto
+j = 1  # elemento del subconjunto
+k = 0  # número de elementos
 
-V = ["v"]
-for i in range(0,len(C)):
-    V.append("c" + str(i))
-V += X
+# Vértices
+salida += "v "
+while(entrada[p] != '#'):
+    salida += entrada[p] + " "
+    p+=1
+a = p
+p+=1
+while(p < len(entrada)):
+    salida += "c" + str(i) + " "
+    for j in range(1,4):
+        p+=1
+    i+=1
 
-E = []
-for i in range(0,len(C)):
-    E.append("(v,c" + str(i) + ")")
-    for j in range(0,3):
-        E.append("(c" + str(i) + ",x" + C[i][j] + ")")
+# Aristas
+salida += " # "
+p = a+1
+i = 1
+while(p < len(entrada)-1):
+    salida += "vc" + str(i) + " "
+    for j in range(1,4):
+        salida += "c" + str(i) + entrada[p] + " "
+        p+=1
+    i+=1
 
-R = ["v"]
-R += X
+# R
+salida += " # v "
+p = 0
+while(entrada[p] != '#'):
+    salida += entrada[p] + " "
+    p+=1
+    k+=1
 
-K = int(4*len(X)/3)
+# K
+salida += " # "
+salida += str(int((k/3)) * 4)
 
-# Salida
-for i in range(0,len(C)):
-    print("C" + str(i) + " = " + str(C[i]))
-
-print("V = " + str(V))
-print("E = " + str(E))
-print("R = " + str(R))
-print("K = " + str(K))
-
-
+print(salida)
