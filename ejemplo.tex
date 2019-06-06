@@ -1,0 +1,48 @@
+\tikzstyle{selected}=[draw=green,fill=green!30]
+\begin{tikzpicture}[>=stealth',shorten >=1pt,auto,node distance=1.8 cm, scale = 1, transform shape, initial text=]
+
+  \tikzstyle{state}=[circle,thick,draw=blue!150,fill=blue!20,minimum size=6mm]
+
+
+  \node[state] 	[selected] (v)  	{$v$};
+  
+  \node[state]  [selected] (c3) [below of=v]    {$c_3$};
+  \node[state]  [selected] (c2) [left of=c3]    {$c_2$};
+  \node[state]  [selected] (c1) [left of=c2]    {$c_1$};
+  \node[state]  (c4) [right of=c3] 	 {$c_4$};
+  \node[state]  (c5) [right of=c4]       {$c_5$};
+
+  
+  \node[state] [selected] (x5) [below of=c3]       {$x_5$};
+  \node[state] [selected] (x4) [left  of=x5]       {$x_4$};
+  \node[state] [selected] (x3) [left  of=x4]       {$x_3$};
+  \node[state] [selected] (x2) [left of=x3]        {$x_2$};
+  \node[state] [selected] (x1) [left of=x2]        {$x_1$};
+  \node[state] [selected] (x6) [right of=x5]       {$x_6$};
+  \node[state] [selected] (x7) [right of=x6]       {$x_7$};
+  \node[state] [selected] (x8) [right of=x7]       {$x_8$};
+  \node[state] [selected] (x9) [right of=x8]       {$x_9$};
+
+  \path[--]
+  (v) edge (c1)
+  (v) edge (c2)
+  (v) edge (c3)
+  (v) edge (c4)
+  (v) edge (c5)
+  (c1) edge (x2)
+  (c1) edge (x5)
+  (c1) edge (x7)
+  (c2) edge (x1)
+  (c2) edge (x3)
+  (c2) edge (x4)
+  (c3) edge (x6)
+  (c3) edge (x8)
+  (c3) edge (x9)
+  (c4) edge (x2)
+  (c4) edge (x3)
+  (c4) edge (x6)
+  (c5) edge (x7)
+  (c5) edge (x8)
+  (c5) edge (x9)
+
+\end{tikzpicture}
