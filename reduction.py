@@ -6,7 +6,7 @@ salida = ""       # aquí es donde está la salida
 # Reducción:
 # Contadores:
 p = 0  # puntero de lectura
-a = 0  # posicion de '#'
+a = 0  # posición de '#'
 i = 1  # subconjunto
 j = 1  # elemento del subconjunto
 k = 0  # número de elementos

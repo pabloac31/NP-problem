@@ -67,6 +67,16 @@
 
 %%% Código
 \usepackage{listings}
+\lstset{literate=%
+{í}{{\'i}}1
+{ú}{{\'u}}1
+{á}{{\'a}}1
+{ó}{{\'o}}1
+{é}{{\'e}}1
+{ä}{{\"a}}1
+{ö}{{\"o}}1
+}
+
 
 %%% Bibliografía
 \makeatletter
@@ -157,7 +167,7 @@ Queremos construir una entrada $(G=(V,E),R,K)$ para el problema ES a partir de u
 
 \begin{itemize}
 \item En el conjunto de vértices habrá un vértice por cada elemento de $X$, otro por cada elemento de $C$ y un vértice al que llamaremos $v$. $$V= \{x_1,\dots,x_{3q}\} \cup \{c_1,\dots, c_n\} \cup \{v\}$$
-\item Habrá una arista uniendo $v$ con cada uno de los $c_i$ y otra uniendo cada $c_i$ con los elementos que contiene. $$E = \{vc_1, \dots, vc_n\} \cup (\bigcup_{x_j \in c_i}\{c_ix_j\})$$
+\item Habrá una arista uniendo $v$ con cada uno de los $c_i$ y otra uniendo cada $c_i$ con los elementos que contiene. $$E = \{vc_1, \dots, vc_n\} \cup (\bigcup_{x_j \in C_i}\{c_ix_j\})$$
 \item Consideremos $R = \{v, x_1, \dots, x_{3q}\}$.
 \item Por último, $K = 4q$.
 \end{itemize}
@@ -178,9 +188,9 @@ Para los vértices, basta con escribir $v$, ir copiando en la salida los element
 
 Para las aristas, volvemos hasta el símbolo $\#$ en la entrada y vamos avanzando escribiendo las aristas $vc_{i},\ c_ic_{ij}, \quad i=1,\dots,n \quad j=1,\dots,3$ (usamos los mismos contadores).
 
-Para $R$, volvemos hacia el comienzo de la entrada y añadimos $v$ seguido de $x_1 \dots x_3q$. Guardamos en otro contador el valor $3q$ (también es espacio logarítmico).
+Para $R$, volvemos hacia el comienzo de la entrada y añadimos $v$ seguido de $x_1 \dots x_{3q}$. Guardamos en otro contador el valor $3q$ (también es espacio logarítmico).
 
-Por último, escribimos $K = 4q$ (multiplicar y dividir en binario se puede hacer en espacio logarítmico).
+Por último, escribimos $K = 4q$. Para conseguir este valor hay que dividir el número de elementos $3q$ entre 3, para hacerlo en espacio logarítmico basta ir contando los valores de la entrada antes de llegar a $\#$ de tres en tres. Este número $q$ se multiplica por 4, como es en binario solo hay que añadir dos $0$ al final, luego es espacio logarítmico.
 
 El funcionamiento del algoritmo queda ilustrado en el código que hemos implementado en Python:
 
